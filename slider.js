@@ -8,12 +8,12 @@ class Slider {
         this.index = 0;
         this.length = this.allFrames.length;
         this.autoplay = autoplay;
-        this.paused = null;
+        this.pausedInterval = null;
         this.init();
     }
 
     init() {
-        this.dotButtons = this.dots();
+        this.dotButtons = this.initDots();
 
         for (let i = 0; i < this.allFrames.length; i++) {
             this.allFrames[i].style.width = 100/this.length + '%';
@@ -41,7 +41,7 @@ class Slider {
 
         if (this.autoplay) {
             this.play();
-            this.slider.addEventListener('mouseenter', () => clearInterval(this.paused));
+            this.slider.addEventListener('mouseenter', () => clearInterval(this.pausedInterval));
             this.slider.addEventListener('mouseleave', () => this.play());
         }
     }
@@ -73,10 +73,10 @@ class Slider {
     }
 
     play() {
-        this.paused = setInterval(() => this.next(), 3000);
+        this.pausedInterval = setInterval(() => this.next(), 3000);
     }
 
-    dots() {
+    initDots() {
         const ol = document.createElement('ol');
         ol.classList.add('carousel-indicators');
         const children = [];
